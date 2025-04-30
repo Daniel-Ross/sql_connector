@@ -5,12 +5,12 @@ from urllib import parse
 
 config = dotenv_values()
 
-SYNAPSE_SERVER_URL = "consumerworkspace.sql.azuresynapse.net"
-STAGING_SERVER_URL = "aop-crm-sqlsrv.database.windows.net"
+SYNAPSE_SERVER_URL = config["SYNAPSE_SERVER_URL"]
+STAGING_SERVER_URL = config["STAGING_SERVER_URL"]
 DRIVER = "ODBC+Driver+18+for+SQL+Server"
-CRM_DATABASE = "dataverse_glynlyon_glynlyon2"
-STAGING_DATABASE = "aop-crm-sql-02-staging"
-SYNAPSE_STAGING = "consumer-sql-staging"
+CRM_DATABASE = config["CRM_DATABASE"]
+STAGING_DATABASE = config["STAGING_DATABASE"]
+SYNAPSE_STAGING = config["SYNAPSE_STAGING"]
 USER = config["DB_USER"]
 PASSWD = config["DB_PASS"]
 AD_USER = config["AD_UID"]
@@ -52,11 +52,14 @@ def create_connections():
     views_engine = sqlalchemy.create_engine(
         "mssql+pyodbc:///?odbc_connect=%s" % views_connection_params
     )
-    staging_engine = sqlalchemy.create_engine(
-        staging_connection_string, pool_pre_ping=True
-    )
+    staging_engine = sqlalchemy.create_engine(staging_connection_string, pool_pre_ping=True)
     return {
         "dynamics": crm_engine,
         "staging": staging_engine,
         "synapse_views": views_engine,
     }
+
+
+if __name__ == "__main__":
+    create_connections()
+    print("Done")
