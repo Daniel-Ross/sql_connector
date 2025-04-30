@@ -24,8 +24,8 @@ def create_connections():
     :return: An engine instance for both Dynamics and staging database.
     """
     crm_connection_string = f"""Driver={{ODBC Driver 18 for SQL Server}};
-                                Server=tcp:consumerworkspace-ondemand.sql.azuresynapse.net,1433;
-                                Database=dataverse_glynlyon_glynlyon2;
+                                Server=tcp:{SYNAPSE_SERVER_URL},1433;
+                                Database={CRM_DATABASE};
                                 Uid={AD_USER};
                                 Pwd={AD_PWD};
                                 Encrypt=yes;
@@ -33,8 +33,8 @@ def create_connections():
                                 Authentication=ActiveDirectoryPassword"""
 
     views_connection_string = f"""Driver={{ODBC Driver 18 for SQL Server}};
-                                Server=tcp:consumerworkspace-ondemand.sql.azuresynapse.net,1433;
-                                Database=consumer-sql-staging;
+                                Server=tcp:{SYNAPSE_SERVER_URL},1433;
+                                Database={SYNAPSE_STAGING};
                                 Uid={AD_USER};
                                 Pwd={AD_PWD};
                                 Encrypt=yes;
@@ -58,8 +58,3 @@ def create_connections():
         "staging": staging_engine,
         "synapse_views": views_engine,
     }
-
-
-if __name__ == "__main__":
-    create_connections()
-    print("Done")
