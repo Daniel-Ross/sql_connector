@@ -1,20 +1,20 @@
 import sqlalchemy
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 from urllib import parse
+import os
 
+load_dotenv()
 
-config = dotenv_values()
-
-SYNAPSE_SERVER_URL = config["SYNAPSE_SERVER_URL"]
-STAGING_SERVER_URL = config["STAGING_SERVER_URL"]
+SYNAPSE_SERVER_URL = os.getenv("SYNAPSE_SERVER_URL")
+STAGING_SERVER_URL = os.getenv("STAGING_SERVER_URL")
 DRIVER = "ODBC+Driver+18+for+SQL+Server"
-CRM_DATABASE = config["CRM_DATABASE"]
-STAGING_DATABASE = config["STAGING_DATABASE"]
-SYNAPSE_STAGING = config["SYNAPSE_STAGING"]
-USER = config["DB_USER"]
-PASSWD = config["DB_PASS"]
-AD_USER = config["AD_UID"]
-AD_PWD = config["AD_PWD"]
+CRM_DATABASE = os.getenv("CRM_DATABASE")
+STAGING_DATABASE = os.getenv("STAGING_DATABASE")
+SYNAPSE_STAGING = os.getenv("SYNAPSE_STAGING")
+USER = os.getenv("DB_USER")
+PASSWD = os.getenv("DB_PASS")
+AD_USER = os.getenv("AD_UID")
+AD_PWD = os.getenv("AD_PWD")
 
 
 def create_connections():
@@ -58,3 +58,8 @@ def create_connections():
         "staging": staging_engine,
         "synapse_views": views_engine,
     }
+
+
+if __name__ == "__main__":
+    connections = create_connections()
+    print("Done")
