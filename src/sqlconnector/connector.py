@@ -33,8 +33,8 @@ def create_connections():
                                 Authentication=ActiveDirectoryPassword"""
 
     views_connection_string = f"""Driver={{ODBC Driver 18 for SQL Server}};
-                                Server=tcp:{SYNAPSE_SERVER_URL},1433;
-                                Database={SYNAPSE_STAGING};
+                                Server=tcp:consumerworkspace-ondemand.sql.azuresynapse.net,1433;
+                                Database=consumer-sql-staging;
                                 Uid={AD_USER};
                                 Pwd={AD_PWD};
                                 Encrypt=yes;
