@@ -14,7 +14,7 @@ SYNAPSE_STAGING = os.getenv("SYNAPSE_STAGING")
 USER = os.getenv("DB_USER")
 PASSWD = os.getenv("DB_PASS")
 AD_USER = os.getenv("AD_UID")
-AD_PWD = os.getenv("AD_PWD")
+AD_PWD = os.getenv("AD_PWD_LOCAL")
 
 
 def create_connections():
