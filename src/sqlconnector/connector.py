@@ -14,7 +14,7 @@ SYNAPSE_STAGING = os.getenv("SYNAPSE_STAGING")
 USER = os.getenv("DB_USER")
 PASSWD = os.getenv("DB_PASS")
 AD_USER = os.getenv("AD_UID")
-AD_PWD = os.getenv("AD_PWD_LOCAL")
+AD_PWD_LOCAL = os.getenv("AD_PWD_LOCAL")
 
 
 def create_connections():
@@ -27,7 +27,7 @@ def create_connections():
                                 Server=tcp:{SYNAPSE_SERVER_URL},1433;
                                 Database={CRM_DATABASE};
                                 Uid={AD_USER};
-                                Pwd={AD_PWD};
+                                Pwd={AD_PWD_LOCAL};
                                 Encrypt=yes;
                                 TrustServerCertificate=no;Connection Timeout=30;
                                 Authentication=ActiveDirectoryPassword"""
@@ -36,7 +36,7 @@ def create_connections():
                                 Server=tcp:consumerworkspace-ondemand.sql.azuresynapse.net,1433;
                                 Database=consumer-sql-staging;
                                 Uid={AD_USER};
-                                Pwd={AD_PWD};
+                                Pwd={AD_PWD_LOCAL};
                                 Encrypt=yes;
                                 TrustServerCertificate=no;
                                 Connection Timeout=30;
