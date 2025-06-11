@@ -17,17 +17,26 @@ AD_USER = os.getenv("AD_UID")
 AD_PWD_LOCAL = os.getenv("AD_PWD_LOCAL")
 
 
-def create_connections():
+def create_connections(
+    synapse_server_url=SYNAPSE_SERVER_URL,
+    crm_database=CRM_DATABASE,
+    ad_user=AD_USER,
+    ad_pwd_local=AD_PWD_LOCAL,
+    user=USER,
+    passwd=PASSWD,
+    staging_server_url=STAGING_SERVER_URL,
+    staging_database=STAGING_DATABASE,
+):
     """
     Create a SqlAlchemy connection to both the Dynamics and staging databases.
 
     :return: An engine instance for both Dynamics and staging database.
     """
     crm_connection_string = f"""Driver={{ODBC Driver 18 for SQL Server}};
-                                Server=tcp:{SYNAPSE_SERVER_URL},1433;
-                                Database={CRM_DATABASE};
-                                Uid={AD_USER};
-                                Pwd={AD_PWD_LOCAL};
+                                Server=tcp:{synapse_server_url},1433;
+                                Database={crm_database};
+                                Uid={ad_user};
+                                Pwd={ad_pwd_local};
                                 Encrypt=yes;
                                 TrustServerCertificate=no;Connection Timeout=30;
                                 Authentication=ActiveDirectoryPassword"""
@@ -35,14 +44,14 @@ def create_connections():
     views_connection_string = f"""Driver={{ODBC Driver 18 for SQL Server}};
                                 Server=tcp:consumerworkspace-ondemand.sql.azuresynapse.net,1433;
                                 Database=consumer-sql-staging;
-                                Uid={AD_USER};
-                                Pwd={AD_PWD_LOCAL};
+                                Uid={ad_user};
+                                Pwd={ad_pwd_local};
                                 Encrypt=yes;
                                 TrustServerCertificate=no;
                                 Connection Timeout=30;
                                 Authentication=ActiveDirectoryPassword"""
 
-    staging_connection_string = f"""mssql+pyodbc://{USER}:{PASSWD}@{STAGING_SERVER_URL}/{STAGING_DATABASE}?driver={DRIVER}"""
+    staging_connection_string = f"""mssql+pyodbc://{user}:{passwd}@{staging_server_url}/{staging_database}?driver={DRIVER}"""
     crm_connection_params = parse.quote_plus(crm_connection_string)
     views_connection_params = parse.quote_plus(views_connection_string)
 
