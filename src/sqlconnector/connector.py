@@ -56,12 +56,14 @@ def create_connections(
     views_connection_params = parse.quote_plus(views_connection_string)
 
     crm_engine = sqlalchemy.create_engine(
-        "mssql+pyodbc:///?odbc_connect=%s" % crm_connection_params
+        "mssql+pyodbc:///?odbc_connect=%s" % crm_connection_params, max_overflow=-1
     )
     views_engine = sqlalchemy.create_engine(
-        "mssql+pyodbc:///?odbc_connect=%s" % views_connection_params
+        "mssql+pyodbc:///?odbc_connect=%s" % views_connection_params, max_overflow=-1
     )
-    staging_engine = sqlalchemy.create_engine(staging_connection_string, pool_pre_ping=True)
+    staging_engine = sqlalchemy.create_engine(
+        staging_connection_string, max_overflow=-1, pool_pre_ping=True
+    )
     return {
         "dynamics": crm_engine,
         "staging": staging_engine,
